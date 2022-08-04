@@ -1,0 +1,32 @@
+version: "3.6"
+
+networks:
+  transit:
+
+services:
+  rabbitmq:
+    image: masstransit/rabbitmq:latest
+    networks:
+      - transit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+      - "15692:15692"
+    healthcheck:
+      timeout: 5s
+      interval: 5s
+      retries: 10
+  
+  redis:
+    image: redis:latest
+    networks:
+      - transit
+    ports:
+      - "6379:6379"
+  
+  mongo:
+    image: mongo:latest
+    networks:
+      - transit
+    ports:
+      - '27017-27019:27017-27019'
